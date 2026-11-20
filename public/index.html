@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#151712">
+  <title>Dead Signal</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body data-view="menu">
+  <canvas id="scene" aria-label="Three-dimensional freight yard"></canvas>
+  <div class="grade"></div>
+  <header id="header">
+    <a class="brand" href="./" aria-label="Dead Signal home"><img src="./favicon.svg" alt=""> DEAD SIGNAL</a>
+    <button id="sound" class="outline" type="button" aria-pressed="false">SOUND ON</button>
+  </header>
+  <main id="menu">
+    <div class="mission">
+      <div class="eyebrow"><span class="signal"></span> SURVIVAL / FREIGHT YARD</div>
+      <h1>DEAD<br><em>SIGNAL<span>.</span></em></h1>
+      <p>The yard went dark. The infected kept coming.<br>Hold the perimeter and survive the next wave.</p>
+      <div class="actions">
+        <button id="deploy" class="primary" type="button" disabled>DEPLOY <span aria-hidden="true">↗</span></button>
+        <button id="controls" class="outline" type="button">CONTROLS</button>
+      </div>
+      <div class="record">BEST RUN <strong id="record">0 KILLS</strong></div>
+      <p id="load-error" role="alert" hidden></p>
+    </div>
+    <button id="join" class="join outline" type="button" hidden><span class="qr-icon" aria-hidden="true">▦</span><span>PLAY ON PHONE<small>Scan to join over Wi-Fi</small></span><span aria-hidden="true">↗</span></button>
+  </main>
+  <div id="hud" inert>
+    <div class="hud-top">
+      <div class="hud-box wave"><span>WAVE</span><strong id="wave">01</strong></div>
+      <div class="hud-box count"><strong id="remaining">0</strong> <span>INFECTED</span></div>
+      <button class="outline" id="pause" type="button" aria-label="Pause game">Ⅱ</button>
+    </div>
+    <div id="announcement" aria-live="polite"></div>
+    <div id="reticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div id="damage" aria-hidden="true"></div>
+    <div class="hud-bottom">
+      <div class="hud-box health"><span>VITALS</span><strong id="health">100</strong><div class="health-track"><i id="health-fill"></i></div></div>
+      <div class="hud-box ammo"><span>PULSE CARBINE</span><strong id="ammo">24</strong><small id="reserve">/ 120</small></div>
+    </div>
+    <div id="touch">
+      <div id="look-pad" aria-label="Drag to aim"></div>
+      <div id="stick" aria-label="Drag to move"><i></i></div>
+      <button id="reload" type="button" aria-label="Reload">↻</button>
+      <button id="fire" type="button">FIRE</button>
+    </div>
+  </div>
+  <section id="overlay" hidden>
+    <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+      <div class="eyebrow" id="panel-label"></div>
+      <h2 id="panel-title"></h2>
+      <div id="panel-content"></div>
+      <div id="panel-actions" class="actions"></div>
+    </div>
+  </section>
+  <script type="module" src="./game.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "dead-signal",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node build.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "qrcode": "1.5.4",
+    "three": "0.187.0"
+  }
+}
