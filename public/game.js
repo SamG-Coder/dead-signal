@@ -20,6 +20,7 @@ let state = 'menu';
 let muted = false;
 let audio;
 let firing = false;
+let shotRequested = false;
 let aimPointer;
 let stickPointer;
 let firePointer;
@@ -179,6 +180,7 @@ function releaseAim() {
 function clearInput() {
   keys.clear();
   firing = false;
+  shotRequested = false;
   move.x = move.y = 0;
   $('stick').firstElementChild.style.transform = '';
   aimPointer = stickPointer = firePointer = undefined;
@@ -271,6 +273,7 @@ addEventListener('keydown', event => {
   if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Escape'].includes(event.code)) event.preventDefault();
   if (!event.repeat && (event.code === 'Escape' || event.code === 'KeyP')) { pause(); return; }
   if (event.code === 'KeyR') reload();
+  if (!event.repeat && event.code === 'Space') shotRequested = true;
   keys.add(event.code);
 });
 addEventListener('keyup', event => keys.delete(event.code));
@@ -291,6 +294,7 @@ document.addEventListener('mousemove', event => {
 canvas.addEventListener('pointerdown', event => {
   if (state !== 'game' || touch || event.button !== 0) return;
   firing = true;
+  shotRequested = true;
   if (document.pointerLockElement !== canvas) {
     aimPointer = event.pointerId;
     canvas.setPointerCapture(event.pointerId);
@@ -347,6 +351,7 @@ fire.addEventListener('pointerdown', event => {
   firePointer = event.pointerId;
   fire.setPointerCapture(event.pointerId);
   firing = true;
+  shotRequested = true;
 });
 for (const event of ['pointerup', 'pointercancel', 'lostpointercapture']) {
   lookPad.addEventListener(event, ({ pointerId }) => { if (aimPointer === pointerId) aimPointer = undefined; });
@@ -560,7 +565,8 @@ function tick(dt) {
     tone(150, 365, .12, .04, 'square');
     updateHud();
   }
-  if (firing || keys.has('Space')) shoot();
+  if (shotRequested || firing || keys.has('Space')) shoot();
+  shotRequested = false;
   recoil = Math.max(0, recoil - dt * 12);
   carbine.weapon.position.set(.235 + Math.cos(bob * .5) * .014 * currentSpeed, -.235 + Math.sin(bob) * .016 * currentSpeed - (reloadAt ? .22 : 0), -.45 + recoil * .11);
   carbine.weapon.rotation.set(recoil * .14 - (reloadAt ? .36 : 0), -.1, -.06);
